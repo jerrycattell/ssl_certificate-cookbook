@@ -613,7 +613,8 @@ class Chef
       def read_from_data_bag(bag, item, item_key, encrypted = false, secret_file = nil)
         begin
           if encrypted
-            item = Chef::EncryptedDataBagItem.load(bag, item, secret_file)
+            secret = Chef::EncryptedDataBagItem.load_secret(secret_file)
+            item = Chef::EncryptedDataBagItem.load(bag, item, secret)
           else
             item = Chef::DataBagItem.load(bag, item)
           end
